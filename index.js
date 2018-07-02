@@ -3,16 +3,11 @@ const MongoClient = require('mongodb').MongoClient;
 const bodyParser =require('body-parser');
 const app = express();
 const fs = require('file-system');
-const mongoose =require('mongoose');
-mongoose.connect('mongodb://user:a12345@ds161960.mlab.com:61960/cv_info');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('We are connected!')
-});
-
-
-
+var tools = require("./tools.js");
+//database hosted on mlab url to be used.
+const URL = 'mongodb://user:a12345@ds161960.mlab.com:61960/cv_info';
+//Check connection to database
+tools.checkdbConnection(URL);
 //load all your routes dynamically
 fs.readdirSync('./Controllers').forEach(function(file){
     var routes = require('./Controllers/'+file);
