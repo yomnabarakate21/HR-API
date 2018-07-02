@@ -1,16 +1,15 @@
-npm install{
+{
   "name": "cv_extractor",
   "version": "1.0.0",
   "description": "An api for providing cv information for different employees",
   "main": "index.js",
-  "scripts": {
-    "dev": "nodemon server.js"
-  },
+  "scripts": {},
   "author": "Yomna Barakat",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "file-system": "^2.2.2",
     "mongodb": "^2.2.16"
   }
 }
