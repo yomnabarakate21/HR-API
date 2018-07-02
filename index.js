@@ -25,6 +25,7 @@ var trial = new Employee({
     email: 'yomna@gmail.com'
 })
 */
+/*
 trial.save(function(err) {
     if (err) {
         console.log('!!!!!!!!!!!!!!!!!');
@@ -32,6 +33,7 @@ trial.save(function(err) {
     }
     console.log('User created!');
 });
+*/
 app.use(bodyParser.urlencoded({ extended: true }));
 //database hosted on mlab url to be used.
 const URL = 'mongodb://user:a12345@ds161960.mlab.com:61960/cv_info';

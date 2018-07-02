@@ -1,14 +1,13 @@
 var Employee = require('../Models/employee.js');
+var mongoose = require('mongoose');
 module.exports = function(app){
 
-    var objectID = require('mongodb').objectID;
-    app.get('/employee/:id/:firstname',(req,res)=>{
+    var ObjectID = require('mongodb').objectID;
+    app.get('/employee/:id',(req,res)=>{
         const id = req.params.id;
-        const firstnameParam= req.params.firstname;
-        const details = {
-            '_id':new objectID(id)
-        };
-        Employee.find({firstname:firstnameParam},function(err,employees){
+        //var newObjectId = new ObjectID.createFromHexString(id);
+var newObjectId= mongoose.Types.ObjectId(id);
+        Employee.find({_id:newObjectId},function(err,employees){
             if (err) throw err;
             res.send(employees)
         });
