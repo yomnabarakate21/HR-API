@@ -39,6 +39,13 @@ module.exports = function(app) {
             }
             return res.json(response);
         }
+        //count the total number of documents
+Employee.count({},function(err,count){
+    if(err) {
+        response = {"error" : true,"message" : "Error fetching data"};
+    }
+    else {
+        //fetch according to the page and the size
         q_skip = size * (pageNo - 1);
         q_limit = size;
         var query = Employee.find({});
@@ -54,11 +61,16 @@ module.exports = function(app) {
             } else {
                 response = {
                     "error": true,
-                    "data": employees
+                    "data": employees,
+                    "pages":Math.ceil(count / size)
                 };
                 res.json(response);
             }
         });
+
+    }
+});
+
 
     });
 
