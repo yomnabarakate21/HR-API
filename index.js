@@ -28,7 +28,6 @@ var trial = new Employee({
 /*
 trial.save(function(err) {
     if (err) {
-        console.log('!!!!!!!!!!!!!!!!!');
         throw err;
     }
     console.log('User created!');
