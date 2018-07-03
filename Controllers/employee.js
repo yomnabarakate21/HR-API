@@ -12,23 +12,19 @@ module.exports = function(app) {
             _id: newObjectId
         }, function(err, employee) {
             if (err) throw err;
-            res.send(employee)
+            res.send(employee);
         });
     });
     //Delete route
     app.delete('/employee/:id', (req, response) => {
         const id = req.params.id;
         var newObjectId = mongoose.Types.ObjectId(id);
-        Emloyee.find({_id: newObjectId},
-            function(err, employee) {
-                if (err) throw err;
-                employee.remove(function(err) {
-                    if (err) throw err;
-                    res.send('Employee'+id+'deleted sucessfully');
-
-                });
-            });
-
+        Employee.findOneAndRemove({_id:newObjectId},function(err){
+            if (err) throw err;
+            response.send('Deleted sucessfully!');
+        });
     });
+
+    //search function
 
 }
