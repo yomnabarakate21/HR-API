@@ -60,7 +60,7 @@ Employee.count({},function(err,count){
                 return res.json(response);
             } else {
                 response = {
-                    "error": true,
+                    "error": false,
                     "data": employees,
                     "pages":Math.ceil(count / size)
                 };
