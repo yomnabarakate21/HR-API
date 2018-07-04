@@ -14,6 +14,7 @@ module.exports = function(app) {
                     "data": employees
                 };
             }
+            res.json(reponse);
 
         });
 
