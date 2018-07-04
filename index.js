@@ -1,14 +1,3 @@
-const express = require('express');
-const MongoClient = require('mongodb').MongoClient;
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const app = express();
-const fs = require('file-system');
-var db= require('./db');
-//require the employee model
-var Employee = require('./Models/employee');
-//var myDate = new Date(2014, 11, 12, 14, 12);
-//console.log(myDate);
 /*
 var trial = new Employee({
     _id: new mongoose.Types.ObjectId(),
@@ -32,18 +21,12 @@ trial.save(function(err) {
     }
     console.log('User created!');
 });
+
 */
-app.use(bodyParser.urlencoded({ extended: true }));
-//load all your routes dynamically
-fs.readdirSync('./Controllers').forEach(function(file) {
-    var routes = require('./Controllers/' + file);
-    routes(app);
-    console.log(file);
 
-});
-
+var app = require('./app');
 //specify local host port on which the app is running.
-const PORT = 8000;
+const PORT = 8000 || process.env.PORT ;
 
 app.listen(PORT, () => {
     console.log(`We are listening on port ${PORT}`);
