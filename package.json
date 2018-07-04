@@ -1,19 +1,22 @@
 {
-  "name": "cv_extractor",
-  "version": "1.0.0",
-  "description": "An api for providing cv information for different employees",
-  "main": "index.js",
-  "scripts": {},
-  "author": "Yomna Barakat",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.18.3",
-    "express": "^4.16.3",
-    "file-system": "^2.2.2",
-    "mongo": "^0.1.0",
-    "mongodb": "^2.2.16",
-    "mongoose": "^5.1.7",
-    "mongoose-validator": "^2.0.2",
-    "validator": "^10.4.0"
-  }
+    "name": "cv_extractor",
+    "version": "1.0.0",
+    "description": "An api for providing cv information for different employees",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "author": "Yomna Barakat",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "config": "^1.30.0",
+        "express": "^4.16.3",
+        "file-system": "^2.2.2",
+        "mongo": "^0.1.0",
+        "mongodb": "^2.2.16",
+        "mongoose": "^5.1.7",
+        "mongoose-validator": "^2.0.2",
+        "validator": "^10.4.0"
+    }
 }

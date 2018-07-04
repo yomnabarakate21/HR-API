@@ -3,7 +3,7 @@
 //////////////////////////////
 
 var tools = require("./tools.js");
-//database hosted on mlab url to be used.
-const URL = 'mongodb://user:a12345@ds161960.mlab.com:61960/cv_info';
+var config = require('config');
+
 //Check connection to database
-tools.checkdbConnection(URL);
+tools.checkdbConnection(config.DBHost);
