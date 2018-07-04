@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
 const fs = require('file-system');
-var tools = require("./tools.js");
+var db= require('./db');
 //require the employee model
 var Employee = require('./Models/employee');
 //var myDate = new Date(2014, 11, 12, 14, 12);
@@ -34,10 +34,6 @@ trial.save(function(err) {
 });
 */
 app.use(bodyParser.urlencoded({ extended: true }));
-//database hosted on mlab url to be used.
-const URL = 'mongodb://user:a12345@ds161960.mlab.com:61960/cv_info';
-//Check connection to database
-tools.checkdbConnection(URL);
 //load all your routes dynamically
 fs.readdirSync('./Controllers').forEach(function(file) {
     var routes = require('./Controllers/' + file);
