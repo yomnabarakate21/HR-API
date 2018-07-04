@@ -12,20 +12,19 @@ chai.use(chaiHttp);
 describe('Employee', () => {
     beforeEach((done) => { //Before each test we empty the database
         Employee.remove({}, (err) => {
-           done();
+            done();
         });
     });
     describe('/GET home', () => {
-      it('it should GET all the employees', (done) => {
-        chai.request(app)
-            .get('/home')
-            .end((err, res) => {
-                res.should.have.status(200);
-                //res.body.should.be.a('array');
-                res.body.length.should.be.eql(0);
-              done();
-            });
-      });
-  });
-
+        it('it should GET all the employees', (done) => {
+            chai.request(app)
+                .get('/home')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.data.should.be.a('array');
+                    res.body.data.length.should.be.eql(0);
+                    done();
+                });
+        });
+    });
 });
