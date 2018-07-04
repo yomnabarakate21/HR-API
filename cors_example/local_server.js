@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 
-cors = require('./CV_extractor_PJ/cors');
+cors = require('cors');
 
 
 app.use(express.static('public'));
