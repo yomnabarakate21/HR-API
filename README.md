@@ -12,7 +12,7 @@ and supplying the application with data from MongoDB that is hosted on the cloud
 #### First in the terminal run :
 npm install
 #### Then run :
-node index.js
+npm start
 
 ```
 The application will run on your local host port 8000, to change the port number you should head to _Index.js_file and change the variable _PORT_ to your chosen number.
