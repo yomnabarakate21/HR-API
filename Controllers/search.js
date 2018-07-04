@@ -18,8 +18,19 @@ module.exports = function(app) {
         }
 
         Employee.find(query, function(err, employees) {
-            if (err) throw err;
-            res.send(employees);
+            if (err) {
+                resonse = {
+                    "error": true,
+                    "message": 'Error in the search query!'
+                };
+
+            } else {
+                reponse = {
+                    "error": false,
+                    "data": employees
+                };
+            }
+            res.json(reponse);
         });
 
     });

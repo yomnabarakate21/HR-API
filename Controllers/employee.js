@@ -12,8 +12,19 @@ module.exports = function(app) {
         Employee.find({
             _id: newObjectId
         }, function(err, employee) {
-            if (err) throw err;
-            res.send(employee);
+            if (err) {
+                resonse = {
+                    "error": true,
+                    "message": 'Error in the getting the employee !!'
+                };
+            }
+            else{
+                reponse = {
+                    "error":false,
+                    "data":employee
+                };
+            }
+
         });
     });
 
@@ -24,8 +35,18 @@ module.exports = function(app) {
         Employee.findOneAndRemove({
             _id: newObjectId
         }, function(err) {
-            if (err) throw err;
-            response.send('Deleted sucessfully!');
+            if (err) {
+                resonse = {
+                    "error": true,
+                    "message": 'Error in the delete operation !!'
+                };
+            }
+            else{
+                reponse = {
+                    "error":false,
+                    "data":'Employee deleted sucessfully! '
+                };
+            }
         });
     });
     //route for pagination

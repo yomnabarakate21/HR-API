@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 module.exports = {
-     checkdbConnection: function(url) {
+
+    //function for checking if database is available and connected.
+    checkdbConnection: function(url) {
         mongoose.connect(url);
         var db = mongoose.connection;
         db.on('error', console.error.bind(console, 'connection error:'));
