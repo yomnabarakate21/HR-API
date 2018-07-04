@@ -8,7 +8,7 @@ app.use(express.static('public'));
 app.use(cors());
 app.get('/', function (req, res) {
 
- var obj = require("/home/bassent/Desktop/fill_first_page.json");
+ var obj = require("fill_first_page.json");
  res.send(obj);
  console.log(obj)
 })
