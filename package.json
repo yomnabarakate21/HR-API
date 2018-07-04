@@ -4,7 +4,8 @@
     "description": "An api for providing cv information for different employees",
     "main": "index.js",
     "scripts": {
-        "start": "node index.js"
+        "start": "NODE_ENV=dev && node index.js",
+        "test": "mocha --timeout 10000"
     },
     "author": "Yomna Barakat",
     "license": "ISC",
@@ -18,5 +19,11 @@
         "mongoose": "^5.1.7",
         "mongoose-validator": "^2.0.2",
         "validator": "^10.4.0"
+    },
+    "devDependencies": {
+        "chai": "^4.1.2",
+        "chai-http": "^4.0.0",
+        "mocha": "^5.2.0",
+        "mockgoose": "^7.3.5"
     }
 }

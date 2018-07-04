@@ -6,4 +6,6 @@ var tools = require("./tools.js");
 var config = require('config');
 
 //Check connection to database
+//console.log(config.util.getEnv('NODE_ENV')); //'combined' outputs the Apache style LOGs
+console.log(config.DBHost);
 tools.checkdbConnection(config.DBHost);
