@@ -25,4 +25,4 @@ The application will run on your local host port 8000, to change the port number
   `get(/employee/:id)`|  get employee data by id.
   `get(/employees/:page/:size)`|  get SIZE of employees data for a certain page.
   `delete(/employee/:id)`|  delete an employee of a certain id.
-`get(/search/:searchFilter/:searchFilter2/:searchParameter?)`  |  search by a certain filter and add the value.
+`get(/search/:param1/:param2/:param3?)`  |  search by a certain filter and add the value.

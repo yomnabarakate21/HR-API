@@ -3,13 +3,13 @@ var mongoose = require('mongoose');
 
 module.exports = function(app) {
 
-    app.get('/search/:searchFilter/:searchFilter2/:searchParameter?', (req, res) => {
+    app.get('/search/:param1/:param2/:param3?', (req, res) => {
 
-        var searchFilter = req.params.searchFilter;
-        var searchFilter2 = req.params.searchFilter2;
-        var searchParameter = req.params.searchParameter;
+        var searchFilter = req.params.param1;
+        var searchFilter2 = req.params.param2;
+        var searchParameter = req.params.param3;
         var query = {};
-        if (!searchParameter) {
+        if (!req.params.param3) {
             var attribute = searchFilter;
             query[attribute] = searchFilter2;
         } else {
