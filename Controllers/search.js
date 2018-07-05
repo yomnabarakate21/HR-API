@@ -11,11 +11,12 @@ module.exports = function(app) {
         var query = {};
         if (!req.params.param3) {
             var attribute = searchFilter;
-            query[attribute] = searchFilter2;
+            query[attribute] =  new RegExp('^'+searchFilter2+'.*', "i");
         } else {
             var attribute = searchFilter + '.' + searchFilter2;
-            query[attribute] = searchParameter;
+            query[attribute] = new RegExp('^'+searchParameter+'.*', "i");
         }
+        console.log(query);
 
         Employee.find(query, function(err, employees) {
             if (err) {
