@@ -16,7 +16,6 @@ module.exports = function(app) {
             var attribute = searchFilter + '.' + searchFilter2;
             query[attribute] = new RegExp('^'+searchParameter+'.*', "i");
         }
-        console.log(query);
 
         Employee.find(query, function(err, employees) {
             if (err) {
