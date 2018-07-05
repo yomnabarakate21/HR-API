@@ -6,6 +6,8 @@ const app = express();
 const fs = require('file-system');
 var db= require('./db');
 var Employee = require('./Models/employee');
+ cors= require('./cors');
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //load all your routes dynamically
