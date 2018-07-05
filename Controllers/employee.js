@@ -13,7 +13,7 @@ module.exports = function(app) {
             _id: newObjectId
         }, function(err, employee) {
             if (err) {
-                resonse = {
+                response = {
                     "error": true,
                     "message": 'Error in the getting the employee !!'
                 };
@@ -30,24 +30,25 @@ module.exports = function(app) {
     });
 
     //Delete route
-    app.delete('/employee/:id', (req, response) => {
+    app.delete('/employee/:id', (req, res) => {
         const id = req.params.id;
         var newObjectId = mongoose.Types.ObjectId(id);
         Employee.findOneAndRemove({
             _id: newObjectId
         }, function(err) {
             if (err) {
-                resonse = {
+                response = {
                     "error": true,
                     "message": 'Error in the delete operation !!'
                 };
             }
             else{
-                reponse = {
+                response = {
                     "error":false,
-                    "data":'Employee deleted sucessfully! '
+                    "message":'Employee deleted sucessfully! '
                 };
             }
+            res.json(response);
         });
     });
     //route for pagination
