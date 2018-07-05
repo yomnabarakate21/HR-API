@@ -27,4 +27,40 @@ describe('Employee', () => {
                 });
         });
     });
+
+    describe('/GET/:id Employee', () => {
+        it('it should get an employee with this id', (done) => {
+            var myDate = new Date(2014, 11, 12, 14, 12);
+            var id = "5b3dcb069b8f0d0138e4b706";
+            var newObjectId = mongoose.Types.ObjectId(id);
+            var employee = new Employee({
+                _id: newObjectId,
+                name: {
+                    firstname: 'John',
+                    lastname: 'Don'
+                },
+                education: {
+                    university: 'AUC',
+                    to: myDate,
+                    from: myDate,
+                    grade: 3.9
+                },
+                email: 'John@gmail.com'
+            });
+            employee.save((err, employee) => {
+                chai.request(app)
+                    .get('/employee/'+id)
+                    .send(employee)
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.be.a('object');
+                        res.body.data.should.have.property('name');
+                        res.body.data.should.have.property('education');
+                        res.body.data.should.have.property('email');
+                        done();
+
+                    });
+            });
+        });
+    });
 });

@@ -9,7 +9,7 @@ module.exports = function(app) {
     app.get('/employee/:id', (req, res) => {
         const id = req.params.id;
         var newObjectId = mongoose.Types.ObjectId(id);
-        Employee.find({
+        Employee.findOne({
             _id: newObjectId
         }, function(err, employee) {
             if (err) {
@@ -24,6 +24,7 @@ module.exports = function(app) {
                     "data":employee
                 };
             }
+            res.json(reponse);
 
         });
     });
