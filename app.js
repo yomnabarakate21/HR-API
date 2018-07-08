@@ -4,11 +4,13 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
 const fs = require('file-system');
-var db= require('./db');
+var db = require('./db');
 var Employee = require('./Models/employee');
- cors= require('./cors');
+cors = require('./cors');
 app.use(cors())
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 //load all your routes dynamically
 fs.readdirSync('./Controllers').forEach(function(file) {

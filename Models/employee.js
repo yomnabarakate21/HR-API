@@ -11,7 +11,7 @@ var emailValidator = [
   ]
 
 var employeeSchema = new Schema({
-            _id: mongoose.Schema.Types.ObjectId,
+            _id: Schema.Types.ObjectId,
             name: {
                 firstname: {
                     type: String,
