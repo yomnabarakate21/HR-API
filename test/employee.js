@@ -56,12 +56,12 @@ describe('/GET/:id Employee', () => {
                 from: myDate,
                 grade: 3.9
             },
-            email: 'John@gmail.com'
+            email: 'John@gmail.com',
+            active: true
         });
         employee.save((err, employee) => {
             chai.request(app)
                 .get('/employee/' + id)
-                .send(employee)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -79,12 +79,17 @@ describe('/GET/:id Employee', () => {
 TEST the /GET/search/:param1/:param2 route
 */
 
-describe('/GET /search/:param1/:param2/:param3',()=>{
+describe('/POST',()=>{
     it('It should search for an employee with a certain filter',(done)=>{
-        var param1= 'email';
-        var param2= 'John@gmail.com';
+        var employee_data ={
+            'name':{
+                'firstname':'John',
+                'lastname':'Don'
+            }
+        };
         chai.request(app)
-        .get('/search/'+param1+'/'+param2)
+        .post('/search')
+        .send(employee_data)
         .end((err,res)=>{
             res.should.have.status(200);
             res.body.should.have.property('error').eql(false);
@@ -97,44 +102,6 @@ describe('/GET /search/:param1/:param2/:param3',()=>{
     });
 
 });
-
-/*
-TEST the /GET/search/:param1/:param2/param3 route
-*/
-
-describe('/GET /search/:param1/:param2/:param3',()=>{
-    it('It should search for an employee with a certain filter',(done)=>{
-        var param1= 'name';
-        var param2= 'firstname';
-        var param3='John';
-        chai.request(app)
-        .get('/search/'+param1+'/'+param2+'/'+param3)
-        .end((err,res)=>{
-            res.should.have.status(200);
-            res.body.should.have.property('error').eql(false);
-            res.body.data.should.be.a('array');
-            res.body.data.length.should.be.eql(1);
-            res.body.data[0].should.have.property('name').property('firstname').eql('John');
-            res.body.data[0].should.have.property('name').property('lastname').eql('Don');
-            done();
-
-        });
-    });
-
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*
