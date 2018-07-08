@@ -76,33 +76,62 @@ describe('/GET/:id Employee', () => {
 });
 
 /*
-TEST the /GET/search/:param1/:param2 route
+TEST the /POST/search route
 */
 
-describe('/POST',()=>{
-    it('It should search for an employee with a certain filter',(done)=>{
-        var employee_data ={
-            'name':{
-                'firstname':'John',
-                'lastname':'Don'
+describe('/POST /search', () => {
+    it('It should search for an employee with a certain filter', (done) => {
+        var employee_data = {
+            'name': {
+                'firstname': 'John',
+                'lastname': 'Don'
             }
         };
         chai.request(app)
-        .post('/search')
-        .send(employee_data)
-        .end((err,res)=>{
-            res.should.have.status(200);
-            res.body.should.have.property('error').eql(false);
-            res.body.data.should.be.a('array');
-            res.body.data.length.should.be.eql(1);
-            res.body.data[0].should.have.property('name').property('firstname').eql('John');
-            done();
+            .post('/search')
+            .send(employee_data)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.have.property('error').eql(false);
+                res.body.data.should.be.a('array');
+                res.body.data.length.should.be.eql(1);
+                res.body.data[0].should.have.property('name').property('firstname').eql('John');
+                done();
 
-        });
+            });
     });
 
 });
 
+
+/*
+TEST /POST employee
+
+*/
+describe('/POST employee', () => {
+    var employee = {
+        "name": {
+            "firstname": "Dina",
+            "lastname": "Barakat"
+        },
+        "email": "dina@gmail.com",
+        "active": true
+    };
+    it('it should create a new user', (done) => {
+        chai.request(app)
+            .post('/employee')
+            .send(employee)
+            .end((err,res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                res.body.should.have.property('message').eql('Employee created sucessfully! ');
+                res.body.should.have.property('error').eql(false);
+                done();
+
+            });
+
+    });
+});
 
 /*
 TEST /DELETE/:id route

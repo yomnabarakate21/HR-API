@@ -1,9 +1,50 @@
 var Employee = require('../Models/employee.js');
 var mongoose = require('mongoose');
-//var mongo = require('./mongo');
+var ObjectID = require('mongodb').objectID;
 module.exports = function(app) {
 
     var ObjectID = require('mongodb').objectID;
+    //Create route
+    app.post('/employee',(req,res)=>{
+        var employee = new Employee({
+            _id: new mongoose.Types.ObjectId(),
+            name:req.body.name,
+            courses:req.body.courses,
+            experience:req.body.experience,
+            education:req.body.education,
+            address:req.body.address,
+            phoneNo:req.body.phoneNo,
+            email:req.body.email,
+            languages:req.body.languages,
+            active:req.body.active,
+            linkedin:req.body.linkedin,
+            skills:req.body.skills,
+            profilePicture:req.body.profilePicture,
+            projects:req.body.projects,
+            position:req.body.position,
+            fb:req.body.fb
+
+        });
+        employee.save(function(err){
+            if (err) {
+                response = {
+                    "error": true,
+                    "message": 'Error in the creation operation !!'
+                };
+            }
+            else{
+                response = {
+                    "error":false,
+                    "message":'Employee created sucessfully! '
+                };
+            }
+            res.json(response);
+
+        });
+
+    });
+
+
 
     //Read route
     app.get('/employee/:id', (req, res) => {

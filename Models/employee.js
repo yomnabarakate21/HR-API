@@ -55,7 +55,8 @@ var employeeSchema = new Schema({
                         },
                         grade: Number
                     }],
-                    required: true
+
+                    required: false
 
                 },
                 address: [{
