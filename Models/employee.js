@@ -83,7 +83,12 @@ var employeeSchema = new Schema({
                 projects:[{
                     type:Schema.Types.ObjectId,
                     ref:'projectSchema'
-                }]
+                }],
+                active:{
+                    type:Boolean,
+                    required:true
+                },
+                position:String
             });
             var Employee = mongoose.model('Employee',employeeSchema);
             module.exports= Employee;

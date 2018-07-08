@@ -11,7 +11,7 @@ app.use(cors())
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
+app.use(bodyParser.json());
 //load all your routes dynamically
 fs.readdirSync('./Controllers').forEach(function(file) {
     var routes = require('./Controllers/' + file);

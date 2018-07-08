@@ -10,7 +10,15 @@ var projectSchema = new Schema({
     employees: [{
         type: Schema.Types.ObjectId,
         ref: 'employeeSchema'
-    }]
+    }],
+    from:{
+        type:Date,
+        required:true
+    },
+    to:{
+        type:Date,
+        
+    }
 
 });
 var Project = mongoose.model('Project',projectSchema);
