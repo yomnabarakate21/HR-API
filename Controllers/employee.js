@@ -3,39 +3,39 @@ var mongoose = require('mongoose');
 var ObjectID = require('mongodb').objectID;
 module.exports = function(app) {
 
-    var ObjectID = require('mongodb').objectID;
-    //Create route
-    app.post('/employee',(req,res)=>{
+    //CREATE route
+    app.post('/employee', (req, res) => {
+
         var employee = new Employee({
             _id: new mongoose.Types.ObjectId(),
-            name:req.body.name,
-            courses:req.body.courses,
-            experience:req.body.experience,
-            education:req.body.education,
-            address:req.body.address,
-            phoneNo:req.body.phoneNo,
-            email:req.body.email,
-            languages:req.body.languages,
-            active:req.body.active,
-            linkedin:req.body.linkedin,
-            skills:req.body.skills,
-            profilePicture:req.body.profilePicture,
-            projects:req.body.projects,
-            position:req.body.position,
-            fb:req.body.fb
+            name: req.body.name,
+            courses: req.body.courses,
+            experience: req.body.experience,
+            education: req.body.education,
+            address: req.body.address,
+            phoneNo: req.body.phoneNo,
+            email: req.body.email,
+            languages: req.body.languages,
+            active: req.body.active,
+            linkedin: req.body.linkedin,
+            skills: req.body.skills,
+            profilePicture: req.body.profilePicture,
+            projects: req.body.projects,
+            position: req.body.position,
+            fb: req.body.fb
 
         });
-        employee.save(function(err){
+
+        employee.save(function(err) {
             if (err) {
                 response = {
                     "error": true,
                     "message": 'Error in the creation operation !!'
                 };
-            }
-            else{
+            } else {
                 response = {
-                    "error":false,
-                    "message":'Employee created sucessfully! '
+                    "error": false,
+                    "message": 'Employee created sucessfully! '
                 };
             }
             res.json(response);
@@ -44,9 +44,34 @@ module.exports = function(app) {
 
     });
 
+    //UPDATE route
+    app.patch('/employee/:id', (req, res) => {
+        const id = req.params.id;
+        var newObjectId = mongoose.Types.ObjectId(id);
+        Employee.findByIdAndUpdate(newObjectId,
+            req.body, {
+                new: true
+            }, (err, employee) => {
+                if (err) {
+                    response = {
+                        "error": true,
+                        "message": 'Error !!'
+                    };
+                } else {
+                    response = {
+                        "error": false,
+                        "message": 'Employee updated sucessfully! '
+                    };
+                }
+                res.json(response);
+
+            });
+
+    });
 
 
-    //Read route
+
+    //READ route
     app.get('/employee/:id', (req, res) => {
         const id = req.params.id;
         var newObjectId = mongoose.Types.ObjectId(id);
@@ -58,11 +83,10 @@ module.exports = function(app) {
                     "error": true,
                     "message": 'Error in the getting the employee !!'
                 };
-            }
-            else{
+            } else {
                 reponse = {
-                    "error":false,
-                    "data":employee
+                    "error": false,
+                    "data": employee
                 };
             }
             res.json(reponse);
@@ -82,11 +106,10 @@ module.exports = function(app) {
                     "error": true,
                     "message": 'Error in the delete operation !!'
                 };
-            }
-            else{
+            } else {
                 response = {
-                    "error":false,
-                    "message":'Employee deleted sucessfully! '
+                    "error": false,
+                    "message": 'Employee deleted sucessfully! '
                 };
             }
             res.json(response);
@@ -104,36 +127,38 @@ module.exports = function(app) {
             return res.json(response);
         }
         //count the total number of documents
-Employee.count({},function(err,count){
-    if(err) {
-        response = {"error" : true,"message" : "Error fetching data"};
-    }
-    else {
-        //fetch according to the page and the size
-        q_skip = size * (pageNo - 1);
-        q_limit = size;
-        var query = Employee.find({});
-        query.limit(q_limit);
-        query.skip(q_skip);
-        query.exec(function(err, employees) {
+        Employee.count({}, function(err, count) {
             if (err) {
                 response = {
                     "error": true,
-                    "message": "Error!!"
+                    "message": "Error fetching data"
                 };
-                return res.json(response);
             } else {
-                response = {
-                    "error": false,
-                    "data": employees,
-                    "pages":Math.ceil(count / size)
-                };
-                res.json(response);
+                //fetch according to the page and the size
+                q_skip = size * (pageNo - 1);
+                q_limit = size;
+                var query = Employee.find({});
+                query.limit(q_limit);
+                query.skip(q_skip);
+                query.exec(function(err, employees) {
+                    if (err) {
+                        response = {
+                            "error": true,
+                            "message": "Error!!"
+                        };
+                        return res.json(response);
+                    } else {
+                        response = {
+                            "error": false,
+                            "data": employees,
+                            "pages": Math.ceil(count / size)
+                        };
+                        res.json(response);
+                    }
+                });
+
             }
         });
-
-    }
-});
 
 
     });
