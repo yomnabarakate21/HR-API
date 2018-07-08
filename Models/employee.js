@@ -79,7 +79,11 @@ var employeeSchema = new Schema({
                 profilePicture: {
                     data: Buffer,
                     content: String
-                }
+                },
+                projects:[{
+                    type:Schema.Types.ObjectId,
+                    ref:'projectSchema'
+                }]
             });
             var Employee = mongoose.model('Employee',employeeSchema);
             module.exports= Employee;
