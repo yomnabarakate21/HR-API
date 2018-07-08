@@ -12,12 +12,11 @@ var projectSchema = new Schema({
         ref: 'employeeSchema'
     }],
     from:{
-        type:Date,
-        required:true
+        type:Date
     },
     to:{
-        type:Date,
-        
+        type:Date
+
     }
 
 });
