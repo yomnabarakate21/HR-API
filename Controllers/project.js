@@ -150,4 +150,47 @@ module.exports = function(app) {
 
     });
 
+    //Add employee to project
+    app.patch('/add/:project_id/:employee_id', (req, res) => {
+        const proj_id = req.params.project_id;
+        var projObjectId = mongoose.Types.ObjectId(proj_id);
+        var empObjectId = mongoose.Types.ObjectId(req.params.employee_id);
+        Project.findOne({
+            _id: projObjectId
+        }, function(err, project) {
+            if (err) {
+                response = {
+                    "error": true,
+                    "message": 'Error in the getting the project !!'
+                };
+                res.json(response);
+            } else {
+                var lenOld = project.employees.length;
+                project.employees.addToSet(empObjectId);
+                project.save((err) => {
+                    if (err) throw err;
+                    else {
+                        var lenNew = project.employees.length;
+                        if (lenNew == lenOld) {
+                            response = {
+                                "error": false,
+                                "message": 'dupliacte!'
+                            };
+                            console.log('hena!');
+                            res.json(response);
+                        } else {
+                            response = {
+                                "error": false,
+                                "message": 'Saved'
+                            };
+                                res.json(response);
+                        }
+                    }
+                });
+
+            }
+
+        });
+    });
+
 }

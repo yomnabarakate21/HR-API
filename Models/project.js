@@ -9,7 +9,8 @@ var projectSchema = new Schema({
     status: Boolean,
     employees: [{
         type: Schema.Types.ObjectId,
-        ref: 'employeeSchema'
+        ref: 'employeeSchema',
+
     }],
     from:{
         type:Date
