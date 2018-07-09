@@ -31,4 +31,54 @@ module.exports= function(app){
         });
 
     });
+
+    //READ route
+    app.get('/project/:id', (req, res) => {
+        const id = req.params.id;
+        var newObjectId = mongoose.Types.ObjectId(id);
+        Project.findOne({
+            _id: newObjectId
+        }, function(err, project) {
+            if (err) {
+                response = {
+                    "error": true,
+                    "message": 'Error in the getting the project !!'
+                };
+            } else {
+                reponse = {
+                    "error": false,
+                    "data": project
+                };
+            }
+            res.json(reponse);
+
+        });
+    });
+
+    //UPDATE ROUTE.
+    app.patch('/project/:id', (req, res) => {
+        const id = req.params.id;
+        var newObjectId = mongoose.Types.ObjectId(id);
+        Project.findByIdAndUpdate(newObjectId,
+            req.body, {
+                new: true
+            }, (err, project) => {
+                if (err) {
+                    response = {
+                        "error": true,
+                        "message": 'Error !!'
+                    };
+                } else {
+                    response = {
+                        "error": false,
+                        "message": 'project updated sucessfully! '
+                    };
+                }
+                res.json(response);
+
+            });
+
+    });
+
+
 }
