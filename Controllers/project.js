@@ -1,7 +1,7 @@
 var Project = require('../Models/project.js');
 var mongoose = require('mongoose');
 var ObjectID = require('mongodb').objectID;
-module.exports= function(app){
+module.exports = function(app) {
 
     //CREATE ROUTE
     app.post('/project', (req, res) => {
@@ -9,9 +9,9 @@ module.exports= function(app){
         var project = new Project({
             _id: new mongoose.Types.ObjectId(),
             name: req.body.name,
-            from:req.body.from,
-            to:req.body.to,
-            employees:req.body.employees
+            from: req.body.from,
+            to: req.body.to,
+            employees: req.body.employees
         });
 
         project.save(function(err) {
@@ -80,5 +80,74 @@ module.exports= function(app){
 
     });
 
+    //DELETE route
+    app.delete('/project/:id', (req, res) => {
+        const id = req.params.id;
+        var newObjectId = mongoose.Types.ObjectId(id);
+        Project.findOneAndRemove({
+            _id: newObjectId
+        }, function(err) {
+            if (err) {
+                response = {
+                    "error": true,
+                    "message": 'Error in the delete operation !!'
+                };
+            } else {
+                response = {
+                    "error": false,
+                    "message": 'Project deleted sucessfully! '
+                };
+            }
+            res.json(response);
+        });
+    });
+
+    //Route for projects pagination
+    app.get('/projects/:page/:size', (req, res) => {
+        var pageNo = parseInt(req.params.page);
+        var size = parseInt(req.params.size);
+        if (pageNo == 0 || size < 1) {
+            response = {
+                "error": true,
+                "message": "invalid page number, should start with 1"
+            }
+            return res.json(response);
+        }
+        //count the total number of documents
+        Project.count({}, function(err, count) {
+            if (err) {
+                response = {
+                    "error": true,
+                    "message": "Error fetching data"
+                };
+            } else {
+                //fetch according to the page and the size
+                q_skip = size * (pageNo - 1);
+                q_limit = size;
+                var query = Project.find({});
+                query.limit(q_limit);
+                query.skip(q_skip);
+                query.exec(function(err, projects) {
+                    if (err) {
+                        response = {
+                            "error": true,
+                            "message": "Error!!"
+                        };
+                        return res.json(response);
+                    } else {
+                        response = {
+                            "error": false,
+                            "data": projects,
+                            "pages": Math.ceil(count / size)
+                        };
+                        res.json(response);
+                    }
+                });
+
+            }
+        });
+
+
+    });
 
 }
