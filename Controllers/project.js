@@ -1,4 +1,5 @@
 var Project = require('../Models/project.js');
+var Employee=require('../Models/employee.js');
 var mongoose = require('mongoose');
 var ObjectID = require('mongodb').objectID;
 module.exports = function(app) {
@@ -176,20 +177,30 @@ module.exports = function(app) {
                                 "error": false,
                                 "message": 'dupliacte!'
                             };
-                            console.log('hena!');
-                            res.json(response);
+                        res.json(response);
                         } else {
                             response = {
                                 "error": false,
                                 "message": 'Saved'
                             };
-                                res.json(response);
+
+                            Employee.findOne({
+                                _id: empObjectId
+                            }, function(err, employee) {
+                                if (err) {
+                                    throw err;
+                                } else {
+                                    employee.projects.addToSet(projObjectId);
+                                    console.log(employee.projects);
+                                }
+
+                            });
+
+                            res.json(response);
                         }
                     }
                 });
-
             }
-
         });
     });
 
