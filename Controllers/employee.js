@@ -90,6 +90,7 @@ module.exports = function(app) {
                 };
             }
             res.json(reponse);
+            console.log(employee);
 
         });
     });

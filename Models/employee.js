@@ -64,7 +64,7 @@ var employeeSchema = new Schema({
                     Country: String,
                     Street: String
                 }],
-                phoneNo: Number,
+                phoneNo: String,
                 email: {
                     type: String,
                     required:true,
@@ -87,7 +87,7 @@ var employeeSchema = new Schema({
                 }],
                 active:{
                     type:Boolean,
-                    required:true
+                    
                 },
                 position:String
             });

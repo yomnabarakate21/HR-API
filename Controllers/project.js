@@ -1,5 +1,5 @@
 var Project = require('../Models/project.js');
-var Employee=require('../Models/employee.js');
+var Employee = require('../Models/employee.js');
 var mongoose = require('mongoose');
 var ObjectID = require('mongodb').objectID;
 module.exports = function(app) {
@@ -14,9 +14,9 @@ module.exports = function(app) {
             to: req.body.to,
             employees: req.body.employees
         });
-
         project.save(function(err) {
             if (err) {
+                throw err;
                 response = {
                     "error": true,
                     "message": 'Error in the creation operation !!'
@@ -85,23 +85,53 @@ module.exports = function(app) {
     app.delete('/project/:id', (req, res) => {
         const id = req.params.id;
         var newObjectId = mongoose.Types.ObjectId(id);
-        Project.findOneAndRemove({
-            _id: newObjectId
-        }, function(err) {
-            if (err) {
-                response = {
-                    "error": true,
-                    "message": 'Error in the delete operation !!'
-                };
-            } else {
-                response = {
-                    "error": false,
-                    "message": 'Project deleted sucessfully! '
-                };
-            }
-            res.json(response);
+        var projectSchema = require('mongoose').model('Project').schema;
+
+        projectSchema.pre('remove', function(next) {
+            console.log('hi');
+            Employee.update({}, {
+                    $pull: {
+                        "projects": newObjectId
+                    }
+                }, {
+                    multi: true
+                },
+                (err) => {
+                    console.log('tamam!');
+                }
+            );
+            next();
         });
+
+        Project.find({
+            _id: newObjectId
+        }, (err, projects) => {
+            if (err) throw err;
+            else {
+                console.log(projects.length);
+                projects.forEach((project) => {
+                    project.remove((err) => {
+                        if (err) {
+                            console.log('maza');
+                            response = {
+                                "error": true,
+                                "message": 'Error in the delete operation !!'
+                            };
+                        } else {
+                            console.log('bye');
+                            response = {
+                                "error": false,
+                                "message": 'Project deleted sucessfully! '
+                            };
+                        }
+                        res.json(response);
+                    });
+                });
+            }
+        });
+
     });
+
 
     //Route for projects pagination
     app.get('/projects/:page/:size', (req, res) => {
@@ -142,6 +172,7 @@ module.exports = function(app) {
                             "pages": Math.ceil(count / size)
                         };
                         res.json(response);
+
                     }
                 });
 
@@ -177,22 +208,21 @@ module.exports = function(app) {
                                 "error": false,
                                 "message": 'dupliacte!'
                             };
-                        res.json(response);
+                            res.json(response);
                         } else {
                             response = {
                                 "error": false,
                                 "message": 'Saved'
                             };
 
-                            Employee.findOne({
-                                _id: empObjectId
-                            }, function(err, employee) {
-                                if (err) {
-                                    throw err;
-                                } else {
-                                    employee.projects.addToSet(projObjectId);
-                                    console.log(employee.projects);
+                            Employee.findByIdAndUpdate(empObjectId, {
+                                $addToSet: {
+                                    projects: projObjectId
                                 }
+                            }, {
+                                new: true
+                            }, function(err) {
+                                if (err)  throw err;
 
                             });
 

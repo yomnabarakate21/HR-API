@@ -5,21 +5,23 @@ var Schema = mongoose.Schema;
 
 var projectSchema = new Schema({
     _id: Schema.Types.ObjectId,
-    name: String,
+    name: {
+        type: String,
+        required: true
+    },
     status: Boolean,
     employees: [{
         type: Schema.Types.ObjectId,
-        ref: 'employeeSchema',
-
+        ref: 'employeeSchema'
     }],
-    from:{
-        type:Date
+    from: {
+        type: Date
     },
-    to:{
-        type:Date
+    to: {
+        type: Date
 
     }
 
 });
-var Project = mongoose.model('Project',projectSchema);
+var Project = mongoose.model('Project', projectSchema);
 module.exports = Project;
