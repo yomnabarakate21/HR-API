@@ -3,6 +3,7 @@ process.env.NODE_ENV = 'test';
 var mongoose = require("mongoose");
 var Employee = require('../Models/employee');
 var app = require('../app');
+var seed_employees= require('../seeds/employees');
 
 //Require the dev-dependencies
 let chai = require('chai');
@@ -14,6 +15,7 @@ chai.use(chaiHttp);
 describe('Employee', () => {
     beforeEach((done) => { //Before each test we empty the database
         Employee.remove({}, (err) => {
+            seed_employees.seedEvents();
             done();
         });
     });
@@ -28,7 +30,7 @@ describe('Employee', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.data.should.be.a('array');
-                    res.body.data.length.should.be.eql(0);
+                    res.body.data.length.should.be.eql(3);
                     done();
                 });
         });

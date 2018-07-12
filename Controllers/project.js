@@ -88,7 +88,6 @@ module.exports = function(app) {
         var projectSchema = require('mongoose').model('Project').schema;
 
         projectSchema.pre('remove', function(next) {
-            console.log('hi');
             Employee.update({}, {
                     $pull: {
                         "projects": newObjectId
@@ -97,7 +96,7 @@ module.exports = function(app) {
                     multi: true
                 },
                 (err) => {
-                    console.log('tamam!');
+                    if (err) throw err;
                 }
             );
             next();
@@ -212,7 +211,8 @@ module.exports = function(app) {
                         } else {
                             response = {
                                 "error": false,
-                                "message": 'Saved'
+                                "message": 'Saved',
+                                "data":project
                             };
 
                             Employee.findByIdAndUpdate(empObjectId, {
