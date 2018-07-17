@@ -9,7 +9,8 @@ var projectSchema = new Schema({
         type: String,
         required: true
     },
-    status: Boolean,
+    status:{type:Boolean,
+    required:true} ,
     employees: [{
         type: Schema.Types.ObjectId,
         ref: 'employeeSchema'
@@ -20,7 +21,8 @@ var projectSchema = new Schema({
     to: {
         type: Date
 
-    }
+    },
+    description: String
 
 });
 var Project = mongoose.model('Project', projectSchema);

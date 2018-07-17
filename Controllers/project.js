@@ -12,7 +12,9 @@ module.exports = function(app) {
             name: req.body.name,
             from: req.body.from,
             to: req.body.to,
-            employees: req.body.employees
+            employees: req.body.employees,
+            status:req.body.status,
+            description:req.body.description
         });
         project.save(function(err) {
             if (err) {
