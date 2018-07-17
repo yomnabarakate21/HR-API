@@ -1,4 +1,5 @@
 var Employee = require('../Models/employee.js');
+var Project = require('../Models/project.js');
 var mongoose = require('mongoose');
 var ObjectID = require('mongodb').objectID;
 module.exports = function(app) {
@@ -99,23 +100,46 @@ module.exports = function(app) {
     app.delete('/employee/:id', (req, res) => {
         const id = req.params.id;
         var newObjectId = mongoose.Types.ObjectId(id);
-        Employee.findOneAndRemove({
+        var employeeSchema = require('mongoose').model('Employee').schema;
+        employeeSchema.pre('remove', function(next) {
+            Project.update({}, {
+                    $pull: {
+                        "employees": newObjectId
+                    }
+                }, {
+                    multi: true
+                },
+                (err) => {
+                    if (err) throw err;
+                }
+            );
+            next();
+        });
+        Employee.find({
             _id: newObjectId
-        }, function(err) {
-            if (err) {
-                response = {
-                    "error": true,
-                    "message": 'Error in the delete operation !!'
-                };
-            } else {
-                response = {
-                    "error": false,
-                    "message": 'Employee deleted sucessfully! '
-                };
+        }, (err, employees) => {
+            if (err) throw err;
+            else {
+                employees.forEach((employee) => {
+                    employee.remove((err) => {
+                        if (err) {
+                            response = {
+                                "error": true,
+                                "message": 'Error in the delete operation !!'
+                            };
+                        } else {
+                            response = {
+                                "error": false,
+                                "message": 'Employee deleted sucessfully! '
+                            };
+                        }
+                        res.json(response);
+                    });
+                });
             }
-            res.json(response);
         });
     });
+
     //route for pagination
     app.get('/employees/:page/:size', (req, res) => {
         var pageNo = parseInt(req.params.page);

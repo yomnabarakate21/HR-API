@@ -107,17 +107,14 @@ module.exports = function(app) {
         }, (err, projects) => {
             if (err) throw err;
             else {
-                console.log(projects.length);
                 projects.forEach((project) => {
                     project.remove((err) => {
                         if (err) {
-                            console.log('maza');
                             response = {
                                 "error": true,
                                 "message": 'Error in the delete operation !!'
                             };
                         } else {
-                            console.log('bye');
                             response = {
                                 "error": false,
                                 "message": 'Project deleted sucessfully! '
