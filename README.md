@@ -12,6 +12,10 @@ and supplying the application with data from MongoDB that is hosted on the cloud
 - Npm
 - NodeJs
 
+## Alert!
+Make sure to pay the config file a visit and add the databases that will be used in each of default.js, dev.js and test.js.
+They are left for you to fill.
+
 ### First in the terminal run :
 
 npm install
@@ -39,4 +43,3 @@ The application will run on your local host port 8000, to change the port number
 `post(/project)`              | creates a new project.
 `patch(/project/:id)`         | edits the project with this id.
 `delete(/project/:id)`        | deletes a project with this id.
-                              
