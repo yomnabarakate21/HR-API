@@ -1,8 +1,8 @@
 # Project Title
 
 ```
-This is an Api for a cv_extractor application, dealing with different requests
-and supplying the application with data from MongoDB that is hosted on the cloud.
+This is an Api for a company, dealing with different requests
+and supplying the application with data from a MongoDB.
 ```
 
 ## Getting Started
